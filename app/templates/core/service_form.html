@@ -12,9 +12,13 @@
         <form method="post">
           {% csrf_token %}
           {{ form|crispy }}
-          <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{% url 'core:services' %}" class="btn btn-outline-secondary">Cancelar</a>
+          <div class="row g-2">
+            <div class="col-3 offset-3">
+              <button type="submit" class="btn btn-primary w-100">Guardar</button>
+            </div>
+            <div class="col-3">
+              <a href="{% url 'core:services' %}" class="btn btn-secondary w-100">Cancelar</a>
+            </div>
           </div>
         </form>
       </div>
