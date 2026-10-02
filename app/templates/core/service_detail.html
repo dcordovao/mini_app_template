@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4">{{ service.name }}</h1>
+
+        <dl class="row mb-4">
+          <dt class="col-sm-4">Precio</dt>
+          <dd class="col-sm-8">{{ service.price }}</dd>
+
+          <dt class="col-sm-4">Descripción</dt>
+          <dd class="col-sm-8">{{ service.description }}</dd>
+        </dl>
+
+        <div class="d-flex gap-2">
+          <a href="{% url 'core:services' %}" class="btn btn-outline-secondary">Volver</a>
+
+          <form method="post" action="{% url 'core:service_delete' service.pk %}"
+                class="ms-auto" onsubmit="return confirm('¿Eliminar este servicio?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

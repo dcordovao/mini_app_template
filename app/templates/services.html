@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} Services {% endblock %}
+
+{% block content %}
+  <h1>Servicios</h1>
+  <a href="{% url 'core:service_create' %}" class="btn btn-primary">Nuevo servicio</a>
+  <table class="table table-light">
+    <tr class="table-light">
+        <th class="table-light"> Nombre </th>
+        <th class="table-light"> Precio </th>
+        <th class="table-light"> Descripción </th>
+    </tr>
+
+    {% for service in services_list %}
+    <tr class="table-light">
+        <td class="table-light"><a href="{% url 'core:service_detail service.pk' %}">{{ service.name }}</a></td></td>
+        <td class="table-light">{{ service.price }}</td>
+        <td class="table-light">{{ service.description }}</td>
+    </tr>
+    {% empty %}
+        <tr class="table-light"><td class="table-light">No hay items todavía.</td></tr>
+    {% endfor %}
+    </table>
+{% endblock %}
