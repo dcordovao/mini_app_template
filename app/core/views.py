@@ -29,6 +29,7 @@ def service_create(request):
         form = ServiceForm()
     return render(request, "core/service_form.html", {"form": form, "title": "Nuevo servicio"})
 
+
 @login_required
 def service_detail(request, pk):
     service = get_object_or_404(Service, pk=pk)

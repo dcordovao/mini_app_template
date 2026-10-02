@@ -1,25 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %} Services {% endblock %}
+{% block title %}Servicios{% endblock %}
 
 {% block content %}
-  <h1>Servicios</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3">Servicios</h1>
   <a href="{% url 'core:service_create' %}" class="btn btn-primary">Nuevo servicio</a>
-  <table class="table table-light">
-    <tr class="table-light">
-        <th class="table-light"> Nombre </th>
-        <th class="table-light"> Precio </th>
-        <th class="table-light"> Descripción </th>
-    </tr>
+</div>
 
-    {% for service in services_list %}
-    <tr class="table-light">
-        <td class="table-light"><a href="{% url 'core:service_detail service.pk' %}">{{ service.name }}</a></td></td>
-        <td class="table-light">{{ service.price }}</td>
-        <td class="table-light">{{ service.description }}</td>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Descripción</th>
     </tr>
+  </thead>
+  <tbody>
+    {% for service in services_list %}
+      <tr>
+        <td><a href="{% url 'core:service_detail' service.pk %}">{{ service.name }}</a></td>
+        <td>{{ service.price }}</td>
+        <td>{{ service.description }}</td>
+      </tr>
     {% empty %}
-        <tr class="table-light"><td class="table-light">No hay items todavía.</td></tr>
+      <tr><td colspan="3" class="text-center text-body-secondary">No hay servicios todavía.</td></tr>
     {% endfor %}
-    </table>
+  </tbody>
+</table>
 {% endblock %}

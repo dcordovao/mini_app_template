@@ -27,7 +27,7 @@
           </a>
         </li>
         <li>
-          <a href="{% url 'core:services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% else %}text-white{% endif %}">
+          <a href="{% url 'core:services' %}" class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% else %}text-white{% endif %}">
             <i class="bi bi-table me-2"></i>Servicios
           </a>
         </li>

@@ -149,5 +149,10 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
+# Messages: Bootstrap names the error alert "danger", Django names it "error"
+from django.contrib.messages import constants as messages_constants
+MESSAGE_TAGS = {messages_constants.ERROR: "danger"}
+
+
 # Contance
 from .constance_settings import *
