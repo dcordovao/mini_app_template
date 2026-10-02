@@ -23,21 +23,36 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a href="{% url 'core:index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% else %}text-white{% endif %}">
-            <i class="bi bi-house me-2"></i>Inicio
+            <i class="bi bi-speedometer2 me-2"></i>Dashboard
           </a>
         </li>
         <li>
-          <a href="{% url 'core:services' %}" class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% else %}text-white{% endif %}">
+          <a href="{% url 'core:appointment_list' %}" class="nav-link {% if 'appointment' in request.resolver_match.url_name %}active{% else %}text-white{% endif %}">
+            <i class="bi bi-calendar-check me-2"></i>{% if user.is_admin %}Citas{% else %}Mis citas{% endif %}
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'core:service_list' %}" class="nav-link {% if 'service' in request.resolver_match.url_name %}active{% else %}text-white{% endif %}">
             <i class="bi bi-briefcase me-2"></i>Servicios
           </a>
         </li>
+        {% if user.is_admin %}
+          <li>
+            <a href="{% url 'core:category_list' %}" class="nav-link {% if 'category' in request.resolver_match.url_name %}active{% else %}text-white{% endif %}">
+              <i class="bi bi-tags me-2"></i>Categorías
+            </a>
+          </li>
+        {% endif %}
       </ul>
       <hr>
 
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
           <i class="bi bi-person-circle fs-4 me-2"></i>
-          <strong>{{ user.username }}</strong>
+          <span class="me-2">
+            <strong class="d-block">{{ user.username }}</strong>
+            <small class="text-white-50">{{ user.is_admin|yesno:"Administrador,Cliente" }}</small>
+          </span>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
           <li>

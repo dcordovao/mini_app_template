@@ -30,7 +30,10 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 username=username,
                 email=email,
-                password=password
+                password=password,
+                role=User.Role.ADMIN,
             )
+        # Superusers created before the role field existed default to "client"
+        User.objects.filter(is_superuser=True).update(role=User.Role.ADMIN)
 
         print("Done!")

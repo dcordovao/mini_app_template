@@ -1,6 +1,26 @@
 # mini_app_template
 Django boilerplate for creating fast an app!
 
+## Branches
+Two starting points, so a new product can begin from the one closest to its spec:
+
+| Branch | What it has | Start here when |
+|---|---|---|
+| `one_model_app` | Auth (login/logout), Bootstrap sidebar layout, CRUD of a single `Service` model | The product is one main entity |
+| `multi_model_app` | Everything above + roles, signup, dashboard with stats and an appointment-booking domain | The product has users with different roles and related entities |
+
+### Example domain in `multi_model_app`
+A service agenda: clients sign up and book services; admins confirm or cancel the bookings.
+Each model is there to show one relationship pattern that can be renamed to fit another domain:
+
+| Model | Relationship | Pattern it shows |
+|---|---|---|
+| `User` | `role` field (admin / client) | Role-based access (`@admin_required`, `user.is_admin`) |
+| `Category` ↔ `Service` | N-N (`ManyToManyField`) | Checkbox form field, `prefetch_related`, `annotate(Count)` |
+| `Appointment` → `User` | 1-N, `on_delete=CASCADE` | Ownership: each client only sees their own records (`visible_to`) |
+| `Appointment` → `Service` | 1-N, `on_delete=PROTECT` | Deleting a service with bookings is blocked and reported to the user |
+| `Appointment` | N-N between users and services, with its own data | Status workflow, double-booking rule (form + DB `UniqueConstraint`) |
+
 ## Authors
 - dcordovao
 

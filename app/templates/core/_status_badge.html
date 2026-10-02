@@ -1,0 +1,1 @@
+<span class="badge {% if appointment.status == 'confirmed' %}text-bg-success{% elif appointment.status == 'cancelled' %}text-bg-secondary{% else %}text-bg-warning{% endif %}">{{ appointment.get_status_display }}</span>

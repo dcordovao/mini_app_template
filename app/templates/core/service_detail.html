@@ -11,20 +11,35 @@
 
         <dl class="row mb-4">
           <dt class="col-sm-4">Precio</dt>
-          <dd class="col-sm-8">{{ service.price }}</dd>
+          <dd class="col-sm-8">${{ service.price }}</dd>
+
+          <dt class="col-sm-4">Duración</dt>
+          <dd class="col-sm-8">{{ service.duration_minutes }} min</dd>
+
+          <dt class="col-sm-4">Categorías</dt>
+          <dd class="col-sm-8">
+            {% for category in service.categories.all %}
+              <span class="badge text-bg-light border">{{ category.name }}</span>
+            {% empty %}
+              <span class="text-body-secondary">Sin categoría</span>
+            {% endfor %}
+          </dd>
 
           <dt class="col-sm-4">Descripción</dt>
           <dd class="col-sm-8">{{ service.description }}</dd>
         </dl>
 
         <div class="d-flex gap-2">
-          <a href="{% url 'core:services' %}" class="btn btn-outline-secondary">Volver</a>
+          <a href="{% url 'core:service_list' %}" class="btn btn-outline-secondary">Volver</a>
+          <a href="{% url 'core:appointment_create' %}?service={{ service.pk }}" class="btn btn-primary">Agendar</a>
 
-          <form method="post" action="{% url 'core:service_delete' service.pk %}"
-                class="ms-auto" onsubmit="return confirm('¿Eliminar este servicio?')">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-          </form>
+          {% if user.is_admin %}
+            <form method="post" action="{% url 'core:service_delete' service.pk %}"
+                  class="ms-auto" onsubmit="return confirm('¿Eliminar este servicio?')">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+          {% endif %}
         </div>
       </div>
     </div>
