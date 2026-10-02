@@ -6,6 +6,11 @@ services:
       - db_volume:/var/lib/postgresql/data/
     env_file:
       - dev.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
 
   redis_pr:
     image: "redis:8.0-alpine"
@@ -29,9 +34,13 @@ services:
       - "8000:8000"
     env_file:
       - dev.env
+    # initapp: migrate + cache table + admin/admin if it doesn't exist (safe to run on every start)
+    command: ["sh", "-c", "python manage.py initapp && python manage.py runserver 0.0.0.0:8000"]
     depends_on:
-      - db
-      - redis_pr
+      db:
+        condition: service_healthy
+      redis_pr:
+        condition: service_started
 
 volumes:
   db_volume:
